@@ -13,8 +13,9 @@ let mouse = {
 };
 
 window.addEventListener('mousemove', function(e) {
-  mouse.x = mouse.x;
-  mouse.y = mouse.y;
+  mouse.x = e.x;
+  mouse.y = e.y;
+  console.log(mouse)
 });
 
 ctx.fillStyle = 'white';
@@ -39,6 +40,19 @@ class Particle {
     ctx.closePath();
     ctx.fill();
   }
+
+  update() {
+    let dx = mouse.x - this.x;
+    let dy = mouse.y - this.y;
+    let distance = Math.sqrt(dx * dx + dy * dy);
+
+    if (distance < 50) {
+      this.size = 50;
+    } else {
+      this.size = 3;
+    }
+
+  }
 }
 
 function init() {
@@ -51,10 +65,10 @@ function init() {
 }
 
 function animate() {
-  requestAnimationFrame(animate);
-  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   for (let i = 0; i < particleArray.length; i++) {
     particleArray[i].draw();
+    particleArray[i].update();
   }
   requestAnimationFrame(animate);
 }

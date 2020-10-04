@@ -52,8 +52,8 @@ class Particle {
     let directionX = forceDirectionX * force * this.density;
     let directionY = forceDirectionY * force * this.density;
     if (distance < 50) {
-      this.x += forceDirectionX;
-      this.y += forceDirectionY;
+      this.x -= forceDirectionX;
+      this.y -= forceDirectionY;
     } else {
       this.size = 3;
     }

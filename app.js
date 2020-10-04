@@ -15,7 +15,6 @@ let mouse = {
 window.addEventListener('mousemove', function(e) {
   mouse.x = e.x;
   mouse.y = e.y;
-  console.log(mouse)
 });
 
 ctx.fillStyle = 'white';
@@ -30,6 +29,7 @@ class Particle {
     this.size = 3;
     this.baseX = this.x;
     this.baseY = this.y;
+    // Density affects the movement speed of parcticles making them more natural
     this.density = (Math.random() * 30) + 1;
   };
 
@@ -45,13 +45,18 @@ class Particle {
     let dx = mouse.x - this.x;
     let dy = mouse.y - this.y;
     let distance = Math.sqrt(dx * dx + dy * dy);
-
+    let forceDirectionX = dx / distance;
+    let forceDirectionY = dy / distance;
+    let maxDistance = mouse.radius;
+    let force = (maxDistance - distance) / maxDistance;
+    let directionX = forceDirectionX * force * this.density;
+    let directionY = forceDirectionY * force * this.density;
     if (distance < 50) {
-      this.size = 50;
+      this.x += forceDirectionX;
+      this.y += forceDirectionY;
     } else {
       this.size = 3;
     }
-
   }
 }
 

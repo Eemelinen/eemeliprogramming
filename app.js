@@ -21,7 +21,7 @@ window.addEventListener('mousemove', function(event) {
 
 ctx.fillStyle = 'white';
 ctx.font = '20px Verdana';
-ctx.fillText('Fullstack', 0, 30);
+ctx.fillText('Developer', 0, 30);
 const textCoordinates = ctx.getImageData(0, 0, 100, 100);
 
 class Particle {
@@ -36,7 +36,7 @@ class Particle {
   };
 
   draw() {
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = 'salmon';
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.closePath();
@@ -71,6 +71,28 @@ class Particle {
   }
 }
 
+function connect() {
+  let opacityValue = 1;
+  for (let a = 0; a < particleArray.length; a++) {
+    for (let b = a; b < particleArray.length; b++) {
+      let dx = particleArray[a].x - particleArray[b].x
+      let dy = particleArray[a].y - particleArray[b].y
+      let distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < 25) {
+        opacityValue = 1 - (distance / 50);
+        ctx.strokeStyle = `rgba(223, 83, 83, ${opacityValue})`
+        // ctx.strokeStyle = 'pink';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(particleArray[a].x, particleArray[a].y);
+        ctx.lineTo(particleArray[b].x, particleArray[b].y);
+        ctx.stroke();
+      }
+    }
+  }
+}
+
 function init() {
   particleArray = [];
   for (let y = 0, y2 = textCoordinates.height; y < y2; y++) {
@@ -78,7 +100,7 @@ function init() {
       if (textCoordinates.data[(y * 4 * textCoordinates.width) + (x * 4) + 3] > 128) {
         let positionX = x + adjustX;
         let positionY = y + adjustY;
-        particleArray.push(new Particle(positionX * 10, positionY * 10));
+        particleArray.push(new Particle(positionX * 12, positionY * 12));
       }
     }
   }
@@ -90,8 +112,16 @@ function animate() {
     particleArray[i].draw();
     particleArray[i].update();
   }
+  connect();
   requestAnimationFrame(animate);
 }
 
 init();
 animate();
+
+window.addEventListener('mouseout',
+  function() {
+    mouse.x = null;
+    mouse.y = null;
+  }
+);

@@ -17,7 +17,9 @@ function calcSize() {
   } else if (window.innerWidth < 800 && window.innerWidth > 600) {
     sizeModifier = 2;
   } else if (window.innerWidth < 600 && window.innerWidth > 400) {
-    sizeModifier = 3.2;
+    sizeModifier = 3.3;
+  } else {
+    sizeModifier = 3.6;
   }
 }
 
@@ -42,11 +44,11 @@ class Particle {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.size = 5;
+    this.size = 5 / sizeModifier;
     this.baseX = this.x;
     this.baseY = this.y;
     // Density affects the movement speed of parcticles making them more natural
-    this.density = (Math.random() * 30) + 1;
+    this.density = (Math.random() * 30 / sizeModifier) + 1;
   };
 
   draw() {

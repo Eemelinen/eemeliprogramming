@@ -17,7 +17,9 @@ function calcSize() {
   } else if (window.innerWidth < 800 && window.innerWidth > 600) {
     sizeModifier = 2;
   } else if (window.innerWidth < 600 && window.innerWidth > 400) {
-    sizeModifier = 3.2;
+    sizeModifier = 3.3;
+  } else {
+    sizeModifier = 3.6;
   }
 }
 

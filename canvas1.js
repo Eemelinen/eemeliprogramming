@@ -44,11 +44,11 @@ class Particle {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.size = 5;
+    this.size = 5 / sizeModifier;
     this.baseX = this.x;
     this.baseY = this.y;
     // Density affects the movement speed of parcticles making them more natural
-    this.density = (Math.random() * 30) + 1;
+    this.density = (Math.random() * 30 / sizeModifier) + 1;
   };
 
   draw() {
